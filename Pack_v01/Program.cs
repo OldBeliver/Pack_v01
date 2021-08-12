@@ -26,39 +26,47 @@ namespace Pack_v01
 
             Console.WriteLine($"\nнажмите ENTER для начала переклички\n");
             Console.ReadKey();
-            for (int i = 0; i < baseTeam.Length; i++)
-            {
-                Console.WriteLine($"{i+1:d2}. Рядовой {baseTeam[i]}");
-                Thread.Sleep(1000);
-            }
+            
+            ShowInfo(baseTeam);
+            
+            Console.WriteLine($"нажмите ENTER для продолжения");
+            Console.ReadKey();
 
-            Console.WriteLine($"\nОтряд, слушай приказ командира полка!\nБойцы, чья фамилия начинается на букву \"Б\" выйти из строя\n");
+            Console.WriteLine($"\nОтряд, слушай приказ командира полка!\nБойцы, чья фамилия начинается на букву \"Б\" выйти из строя");
             IEnumerable<string> firstLetter = baseTeam.Where(soldier => soldier.ToUpper().StartsWith("Б"));
 
-            foreach (string soldier in firstLetter)
-            {
-                Console.WriteLine($"{soldier}");
-            }
+            Console.WriteLine($"\nнажмите ENTER для продолжения\n");
+            Console.ReadKey();
+            
+            ShowInfo(firstLetter.ToArray());
+            
+            Console.WriteLine($"\nнажмите ENTER для продолжения");
+            Console.ReadKey();
 
             Console.WriteLine($"\nВы переходите в состав группы Бэ из {vacctinationTeam.Length} человек");
 
             vacctinationTeam = vacctinationTeam.Union(firstLetter).ToArray();
 
             Console.WriteLine($"\nГруппа Бэ, на вакцинацию шагом марш!");
-            for (int i = 0; i < vacctinationTeam.Length; i++)
-            {
-                Console.WriteLine($"{i + 1:d2}. Рядовой {vacctinationTeam[i]}");                
-            }
-
+            
+            ShowInfo(vacctinationTeam);
+            
             Console.WriteLine($"\nнажмите ENTER, чтобы повернуться к оставшимся бойцам");
             Console.ReadKey();
             Console.WriteLine($"\nОстальным: ");
             var rest = baseTeam.Except(firstLetter.ToArray());
-            foreach (string soldier in rest)
-            {
-                Console.WriteLine($"{soldier}");
-            }
+            baseTeam = rest.ToArray();
+            
+            ShowInfo(baseTeam);
             Console.WriteLine($"Вольно! Разойтись!");
+        }
+
+        static void ShowInfo(string[] surnames)
+        {
+            for (int i = 0; i < surnames.Length; i++)
+            {
+                Console.WriteLine($"{i+1:d2}. Рядовой {surnames[i]}");
+            }
         }
     }
 }
